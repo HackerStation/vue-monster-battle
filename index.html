@@ -14,8 +14,10 @@
           <div class="healthbar">
             <div
               class="healthbar text-center"
-              style="background-color: green; margin: 0; color: white;"
-            ></div>
+              :style="[{'background-color': 'green', margin: 0, color: 'white'}, {width: playerHealth + '%'}]"
+            >
+              {{ playerHealth }}
+            </div>
           </div>
         </div>
         <div class="small-6 columns">
@@ -23,8 +25,10 @@
           <div class="healthbar">
             <div
               class="healthbar text-center"
-              style="background-color: green; margin: 0; color: white;"
-            ></div>
+              :style="[{'background-color': 'green', margin: 0, color: 'white'}, {width: monsterHealth + '%'}]"
+            >
+              {{ monsterHealth }}
+            </div>
           </div>
         </div>
       </section>
@@ -35,7 +39,7 @@
       </section>
       <section class="row controls" v-if="showGameButtons">
         <div class="small-12 columns">
-          <button id="attack">ATTACK</button>
+          <button id="attack" @click="attack">ATTACK</button>
           <button id="special-attack">SPECIAL ATTACK</button>
           <button id="heal">HEAL</button>
           <button id="give-up" @click="stopGame">GIVE UP</button>
