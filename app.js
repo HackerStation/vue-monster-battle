@@ -6,50 +6,76 @@ new Vue({
     showStartGame: true,
     playerHealth: 100,
     monsterHealth: 100,
+    gameIsOn: false,
     hits: [],
+    numOfHeals: 3,
     numOfSpecialAttacks: 3,
   },
   methods: {
     attack: function (e, playerAttackLevel = 10) {
       this.showGameLog = true;
 
-      const playerDamage = Math.ceil(Math.random() * playerAttackLevel);
-      const monsterDamage = Math.ceil(Math.random() * 10);
+      const damageOnPlayer = Math.ceil(Math.random() * playerAttackLevel);
+      const damageOnMonster = Math.ceil(Math.random() * 10);
 
       this.hits.push({
-        player: playerDamage,
-        monster: monsterDamage,
+        player: damageOnPlayer,
+        monster: damageOnMonster,
       });
 
-      this.playerHealth -= playerDamage;
-      this.monsterHealth -= monsterDamage;
+      this.playerHealth -= damageOnPlayer;
+      this.monsterHealth -= damageOnMonster;
+    },
+    heal: function () {
+      if (this.gameIsOn && this.numOfHeals > 0) {
+        let healBy = Math.ceil(Math.random() * 20);
+        let damageOnPlayer = Math.ceil(Math.random() * 10);
+
+        while (healBy < damageOnPlayer) {
+          healBy = Math.ceil(Math.random() * 20);
+          damageOnPlayer = Math.ceil(Math.random() * 10);
+        }
+
+        this.playerHealth = this.playerHealth + healBy - damageOnPlayer;
+        this.numOfHeals--;
+      }
     },
     specialAttack: function name() {
       if (this.numOfSpecialAttacks > 0) {
         this.showGameLog = true;
 
-        const playerDamage = Math.ceil(Math.random() * 10);
-        const monsterDamage = Math.ceil(Math.random() * 20);
+        let damageOnPlayer = Math.ceil(Math.random() * 20);
+        let damageOnMonster = Math.ceil(Math.random() * 30);
+
+        while (damageOnPlayer > damageOnMonster) {
+          damageOnPlayer = Math.ceil(Math.random() * 20);
+          damageOnMonster = Math.ceil(Math.random() * 30);
+        }
 
         this.hits.push({
-          player: playerDamage,
-          monster: monsterDamage,
+          player: damageOnPlayer,
+          monster: damageOnMonster,
         });
 
-        this.playerHealth -= playerDamage;
-        this.monsterHealth -= monsterDamage;
+        this.playerHealth -= damageOnPlayer;
+        this.monsterHealth -= damageOnMonster;
       }
     },
     startGame: function () {
+      this.gameIsOn = true;
       this.showStartGame = false;
       this.showGameButtons = true;
     },
     stopGame: function () {
+      this.isGameOn = false;
       this.showStartGame = true;
       this.showGameButtons = false;
       this.showGameLog = false;
       this.playerHealth = 100;
       this.monsterHealth = 100;
+      this.hits = [];
+      this.numOfHeals = 3;
+      this.numOfSpecialAttacks = 3;
     },
   },
 });
