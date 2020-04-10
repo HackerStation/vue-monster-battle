@@ -48,7 +48,14 @@
       <section class="row log" v-if="showGameLog">
         <div class="small-12 columns">
           <ul>
-            <li></li>
+            <li v-for="hit in hits">
+              <div class="monster-turn">
+                Monster hits player for {{ hit.player }}
+              </div>
+              <div class="player-turn">
+                Player hits monster for {{ hit.monster }}
+              </div>
+            </li>
           </ul>
         </div>
       </section>

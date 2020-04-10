@@ -6,14 +6,19 @@ new Vue({
     showStartGame: true,
     playerHealth: 100,
     monsterHealth: 100,
+    hits: [],
   },
   methods: {
     attack: function () {
+      this.showGameLog = true;
+
       const playerDamage = Math.ceil(Math.random() * 10);
       const monsterDamage = Math.ceil(Math.random() * 10);
 
-      console.log(playerDamage);
-      console.log(monsterDamage);
+      this.hits.push({
+        player: playerDamage,
+        monster: monsterDamage,
+      });
 
       this.playerHealth -= playerDamage;
       this.monsterHealth -= monsterDamage;
@@ -26,6 +31,8 @@ new Vue({
       this.showStartGame = true;
       this.showGameButtons = false;
       this.showGameLog = false;
+      this.playerHealth = 100;
+      this.monsterHealth = 100;
     },
   },
 });
