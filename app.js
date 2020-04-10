@@ -25,6 +25,15 @@ new Vue({
 
       this.playerHealth -= damageOnPlayer;
       this.monsterHealth -= damageOnMonster;
+
+      this.checkGameOver();
+    },
+    checkGameOver: function () {
+      if (this.playerHealth <= 0 || this.monsterHealth <= 0) {
+        this.isGameOn = false;
+        this.showStartGame = true;
+        this.showGameButtons = false;
+      }
     },
     heal: function () {
       if (this.gameIsOn && this.numOfHeals > 0) {
@@ -38,6 +47,8 @@ new Vue({
 
         this.playerHealth = this.playerHealth + healBy - damageOnPlayer;
         this.numOfHeals--;
+
+        this.checkGameOver();
       }
     },
     specialAttack: function name() {
@@ -59,14 +70,17 @@ new Vue({
 
         this.playerHealth -= damageOnPlayer;
         this.monsterHealth -= damageOnMonster;
+
+        this.checkGameOver();
       }
     },
     startGame: function () {
+      this.resetGame();
       this.gameIsOn = true;
       this.showStartGame = false;
       this.showGameButtons = true;
     },
-    stopGame: function () {
+    resetGame: function () {
       this.isGameOn = false;
       this.showStartGame = true;
       this.showGameButtons = false;
